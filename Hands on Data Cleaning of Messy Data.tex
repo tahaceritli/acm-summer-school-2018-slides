@@ -1,0 +1,326 @@
+\documentclass{beamer}					% Document class
+
+\usepackage[english]{babel}				% Set language
+\usepackage[utf8x]{inputenc}			% Set encoding
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{standalone}
+\usepackage{dirtytalk}
+\usepackage[numbers]{natbib}
+
+\bibliographystyle{ieeetr}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{bayesnet}
+
+\mode<presentation>						% Set options
+{
+  \usetheme{default}					% Set theme
+  \usecolortheme{default} 				% Set colors
+  \usefonttheme{default}  				% Set font theme
+  \setbeamertemplate{caption}[numbered]	% Set caption to be numbered
+}
+
+\usepackage{graphicx}					% For including figures
+\usepackage{booktabs}					% For table rules
+\usepackage{hyperref}					% For cross-referencing
+
+\title{Hands on Data Cleaning of Messy Data}	% Presentation title
+% \author{Author One}								% Presentation author
+%\institute{Name of institution}					% Author affiliation
+\date{\today}									% Today's date	
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+   
+%\begin{frame}
+%\tableofcontents
+%\end{frame}
+
+ \begin{frame}[c]
+  \frametitle{Motivation of the Lab}
+ \begin{itemize}
+ \item to present some of the data quality issues in real-world datasets.
+ \item to explain how one can improve quality of such messy data.
+ \item to offer a hands on practice for data cleaning.
+ \end{itemize}
+ \end{frame}
+   
+ \begin{frame}[c]
+ \frametitle{A Real-World Scenario: The rodents dataset}
+ \begin{itemize}
+ \item data on rodents during a survey (over 25 years).
+ \item each row denotes the information collected on an individual rodent.
+ \item useful for studying population dynamics and species interactions.
+ \item useful links:
+ \begin{itemize}
+ \item the original data is provided by Ernest et.\ al.\ \cite{Ernest2018}. 
+ \item meta-data is also available at \footnotesize{\url{http://esapubs.org/archive/ecol/E090/118/Portal\_rodent\_metadata.htm}}.
+  \end{itemize}
+ \end{itemize}
+ \end{frame}
+ 
+ \begin{frame}[c]
+  \frametitle{Data Quality}
+ \begin{itemize}
+ \item \textbf{inconsistencies}: 
+ \begin{itemize}
+ \item domain violation: a date entry of 4.31.2000, which is an invalid value (the intention might be 5.01.2000).
+ \end{itemize}
+ \item \textbf{missing data}: empty cells (some of them!), -99, etc. 
+ \item \textbf{format variabilities} \footnote{several columns added for teaching purposes (see \footnotesize{\url{http://www.datacarpentry.org/OpenRefine-ecology-lesson/01-working-with-openrefine/}}).}: 
+ \begin{itemize}
+ \item typos: \say{Amph\textcolor{blue}{\textbf{e}}spiza bilineata} for \say{Amph\textcolor{blue}{\textbf{i}}spiza bilineata}.
+ \item record linkage: \say{UNITED STATES} and \say{United States of America}.
+ \item abbreviations: \say{US}. 
+ \item leading and trailing whitespace: \say{  Amphispiza bilineata} and \say{  Amphispiza bilineata  }.
+ \end{itemize}
+  \end{itemize}
+   \end{frame}
+
+\begin{frame}[c]
+\frametitle{Data Quality}
+\begin{itemize}
+ \item more issues for you to explore.
+ \item repetitive tasks taking lots of time. 
+ \item various tools that helps to transform such data: Trifacta \cite{Trifacta2018}, OpenRefine \cite{verborgh2013using}, etc.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Cleaning with OpenRefine}
+\begin{itemize}
+\item a tool for working with messy datasets.
+\item see \cite{verborgh2013using} for details.
+\item useful links: 
+\begin{itemize}
+\item the software at \footnotesize{\url{http://openrefine.org}}.
+\item the documentation at \footnotesize{\url{https://github.com/OpenRefine/OpenRefine/wiki/Documentation-For-Users}}.
+\end{itemize}
+\item we will now install OpenRefine and describe its features for various data cleaning tasks.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Installation}
+\begin{itemize}
+\item \textbf{long answer}:
+\begin{itemize}
+\item detailed installation instructions at \footnotesize{\url{http://openrefine.org/download.html}}.
+\end{itemize}
+\item \textbf{short answer}:
+\begin{itemize}
+\item download the file depending on the OS at \footnotesize{\url{https://github.com/OpenRefine/OpenRefine/releases/tag/2.8}}.
+\item install OpenRefine as follows:
+\begin{itemize}
+\item Linux: extract.
+\item Mac: open, drag icon into the Applications folder.
+\item Windows: unzip.
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Running OpenRefine}
+\begin{itemize}
+\item \textbf{run OpenRefine} depending on the operating system:
+\begin{itemize}
+\item Linux: ./refine in your installation folder
+\item Mac: OpenRefine in your Applications folder
+\item Windows: .exe file in your installation folder
+\end{itemize} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Loading Data}
+\begin{itemize}
+\item \textbf{get the dataset}:
+\begin{itemize}
+\item clone the git repository at \footnotesize{\url{https://github.com/tahaceritli/acm-summer-school-2018}}.
+\item use the file in datasets/Portal\_rodents\_19772002\_scinameUUIDs.csv.
+\end{itemize}
+\item \textbf{import the data}:
+\begin{itemize}
+\item click \say{\textcolor{red}{Create Project}}.
+\item click \say{\textcolor{red}{Choose Files}}.
+\item select \textcolor{red}{Portal\_rodents\_19772002\_scinameUUIDs.csv}.
+\item click \say{\textcolor{red}{Next}}.
+\end{itemize} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Data Preview}
+\begin{itemize}
+\item configuration page for importing.
+\item a subset of the data is shown.
+\item use the defaults.
+\item click \say{\textcolor{red}{Create Project}} on the top-right corner.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Checking for Unique Values}
+\begin{itemize}
+\item click drop-down arrow in the \say{survey\_id} column.
+\item select \say{\textcolor{red}{Facet\textgreater Customized Facet\textgreater Duplicates Facet}}.
+\item results in a binary facet of \say{true} or \say{false}. 
+\item \say{true} facet denotes rows with unique values.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{View Range of Values}
+\begin{itemize}
+\item click the drop-down arrow in the \say{scientificName} column.
+\item select \say{\textcolor{red}{Facet\textgreater Text Facet}}.
+\item lists the values and their counts.
+\item any problems with the data?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Updating Cell Values}
+\begin{itemize}
+\item notice the spelling errors, e.g. \say{Amph\textcolor{blue}{\textbf{e}}spiza bilineata} for \say{Amph\textcolor{blue}{\textbf{i}}spiza bilineata}.
+\item hover over the former and select \say{\textcolor{red}{edit}} to update its value.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Trimming Whitespace}
+\begin{itemize}
+\item leading and trailing whitespace: \say{  Amphispiza bilineata} and \say{  Amphispiza bilineata  }.
+\item click the drop-down arrow in the \say{scientificName} column.
+\item select \say{\textcolor{red}{Edit cells\textgreater Common transforms\textgreater Trim leading and trailing whitespace}}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Clustering}
+\begin{itemize}
+\item data often contains more complex inconsistencies due to data collection procedures.
+\item \say{Clustering} helps to find cells in a column, that refers to the same entity with different values.
+\item various methods to determine clusters.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Clustering}
+\begin{itemize}
+\item click the drop-down arrow in the \say{scientificName} column.
+\item select \say{\textcolor{red}{Edit cells\textgreater Cluster and edit...}}.
+\item change the method to nearest neighbor.
+\item you can now check boxes and merge the clusters.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Reconciliation}
+\begin{itemize}
+\item external knowledge to clean messy data.
+\item reconciliation refers to the process of matching data to databases. 
+\item popular knowledge bases: 
+\begin{itemize}
+\item Wikidata at \footnotesize{\url{https://www.wikidata.org/wiki/Wikidata:Main_Page}}. 
+\item Google Knowledge Graph at \footnotesize{\url{https://www.google.com/intl/es419/insidesearch/features/search/knowledge.html}}.
+\end{itemize}
+\item OpenRefine uses Wikidata. details at \footnotesize{\url{https://github.com/OpenRefine/OpenRefine/wiki/Reconciliation}}.
+\item note that Google Knowledge Graph comes with an API to query \footnotesize{\url{https://developers.google.com/knowledge-graph/}}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Reconciliation with OpenRefine}
+\begin{itemize}
+\item click the drop-down arrow in a column.
+\item select \say{\textcolor{red}{Reconcile\textgreater Start reconciling...}}.
+\item select \say{\textcolor{red}{Wikidata}} and click \say{\textcolor{red}{Start Reconciling}}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]
+\frametitle{Filtering Rows}
+\begin{itemize}
+\item you can also search through filters.
+\item click the drop-down arrow in the \say{scientificName} column.
+\item select \say{\textcolor{red}{Text Filter}}.
+\item type \say{bai}, which lists the first 10 matching rows.
+\end{itemize}
+\end{frame}
+
+ \begin{frame}[c]
+ \frametitle{Deliverables}
+ \begin{enumerate}
+ \item \textbf{unique values}: 
+\begin{itemize}
+\item report whether every ID in the column \say{survey\_id} is unique.
+\end{itemize}
+ \item \textbf{inconsistencies}: 
+ \begin{itemize}
+\item find the rows with values 4, 31, 2000 in mo, dy, yr columns respectively.
+\item remove all the matching rows (hint: use the drop-down arrow in the column named \say{All}) and export the data to a csv file. 
+\end{itemize}
+\item \textbf{format variabilities}:
+\begin{itemize}
+\item report how many unique values exist in the \say{country} column of the original dataset.
+\item is there any problems with the data? if so, explain how did you solve them? 
+\item report how many unique values you have after fixing the potential inconsistencies.
+\item hint: \say{clustering} or \say{reconciliation} feature of OpenRefine could be useful for this task.
+ \end{itemize}
+\newcounter{enumTemp}
+\setcounter{enumTemp}{\theenumi}
+ \end{enumerate}
+\end{frame}
+
+ \begin{frame}[c]
+ \frametitle{Deliverables}
+ \begin{enumerate}
+ \setcounter{enumi}{\theenumTemp}
+\item \textbf{missing data}:
+\begin{itemize}
+\item for the columns stake, species, county and nestdir:
+\begin{itemize}
+\item report the columns that have missing data and the encodings used to denote missing entries.
+\item check whether they are actually missing (hint: you may want to check meta-data!).
+\item hint: commonly used encodings: \say{NA}, \say{N/A}, \say{Null}, \say{-1}, \say{-99}, etc. 
+\end{itemize}
+\item explain also if empty cells in reproductive variables (reprod, testes, vagina, pregnant, nipples, lactation) and notes (note1, note2, note3, note4, note5) denote missing data.
+\end{itemize}
+ \end{enumerate}
+\end{frame}
+
+ \begin{frame}[c]
+ \frametitle{Deliverables - Bonus}
+ \begin{itemize}
+ \item Traffic Violations dataset at \footnotesize{\url{https://catalog.data.gov/dataset/traffic-violations-56dda}}.
+ \item import the subset of the original data given in datasets/traffic\_violations\_subset.csv.
+ \item look at the columns named \say{Make} and \say{Driver City}.
+ \item report the data quality issues.
+ \item use OpenRefine to clean the data and explain which feature you used.
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]
+ \frametitle{Submissions}
+ \begin{itemize}
+\item 1 page of either .txt or .pdf (not a .doc file!).
+\item answer the four questions mentioned earlier.
+\item send your report to \footnotesize{\url{acm2018datacleaninglab@gmail.com}} with the title ACMReport-NAME-SURNAME.
+\item attach the exported file at step 2 to the email.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[t, allowframebreaks]
+\frametitle{References}
+\bibliography{references}
+\end{frame}
+
+\end{document}
+
