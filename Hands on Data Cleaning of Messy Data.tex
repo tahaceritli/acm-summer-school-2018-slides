@@ -258,14 +258,15 @@
 \begin{frame}[c]
 \frametitle{Filtering Rows}
 \begin{itemize}
-\item you can also search through filters.
 \item click the drop-down arrow in the \say{scientificName} column.
 \item select \say{\textcolor{red}{Text Filter}}.
 \item type \say{bai}, which lists the first 10 matching rows.
 \item searching rows based on multiple columns:
 \begin{itemize}
+\item click the drop-down arrow in the \say{scientificName} column.
+\item select \say{\textcolor{red}{Facet\textgreater Custom text facet...}}.
 \item General Refine Expression Language (GREL).
-\item and(cells["COL1"].value $==$ "CELL\_VAL1", cells["COL2"].value $==$ "CELL\_VAL2").
+\item and(cells["scientificName"].value == "Amphispiza bilineata", cells["country"].value == "AUSTRALIA")
 \end{itemize}
 \end{itemize}
 \end{frame}
