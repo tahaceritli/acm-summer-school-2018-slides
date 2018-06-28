@@ -21,6 +21,9 @@
   \setbeamertemplate{caption}[numbered]	% Set caption to be numbered
 }
 
+ \setbeamertemplate{footline}[frame number]
+
+
 \usepackage{graphicx}					% For including figures
 \usepackage{booktabs}					% For table rules
 \usepackage{hyperref}					% For cross-referencing
@@ -142,7 +145,8 @@
 \item \textbf{get the dataset}:
 \begin{itemize}
 \item clone the git repository at \footnotesize{\url{https://github.com/tahaceritli/acm-summer-school-2018}}.
-\item use the file in datasets/Portal\_rodents\_19772002\_scinameUUIDs.csv.
+\item use the file at datasets/Portal\_rodents\_19772002\_scinameUUIDs.csv.
+\item the corresponding meta-data at meta-data/E090-118-D1-Rodent metadata.htm.
 \end{itemize}
 \item \textbf{import the data}:
 \begin{itemize}
@@ -164,15 +168,15 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[c]
-\frametitle{Checking for Unique Values}
-\begin{itemize}
-\item click drop-down arrow in the \say{survey\_id} column.
-\item select \say{\textcolor{red}{Facet\textgreater Customized Facet\textgreater Duplicates Facet}}.
-\item results in a binary facet of \say{true} or \say{false}. 
-\item \say{true} facet denotes rows with unique values.
-\end{itemize}
-\end{frame}
+%\begin{frame}[c]
+%\frametitle{Checking for Unique Values}
+%\begin{itemize}
+%\item click drop-down arrow in the \say{survey\_id} column.
+%\item select \say{\textcolor{red}{Facet\textgreater Customized Facet\textgreater Duplicates Facet}}.
+%\item results in a binary facet of \say{true} or \say{false}. 
+%\item \say{true} facet denotes rows with unique values.
+%\end{itemize}
+%\end{frame}
 
 \begin{frame}[c]
 \frametitle{View Range of Values}
@@ -238,9 +242,16 @@
 \begin{frame}[c]
 \frametitle{Reconciliation with OpenRefine}
 \begin{itemize}
-\item click the drop-down arrow in a column.
+\item click the drop-down arrow in the  \say{state} column.
 \item select \say{\textcolor{red}{Reconcile\textgreater Start reconciling...}}.
 \item select \say{\textcolor{red}{Wikidata}} and click \say{\textcolor{red}{Start Reconciling}}.
+\item can take up to 1-2 minute to complete.
+\item lists the matches with their confidence score.
+\item two matching options: 
+\begin{itemize}
+\item with one tick to update the given cell only.
+\item with two ticks to update all the cells with the same value.
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -251,20 +262,24 @@
 \item click the drop-down arrow in the \say{scientificName} column.
 \item select \say{\textcolor{red}{Text Filter}}.
 \item type \say{bai}, which lists the first 10 matching rows.
+\item searching rows based on multiple columns:
+\begin{itemize}
+\item General Refine Expression Language (GREL).
+\item and(cells["COL1"].value $==$ "CELL\_VAL1", cells["COL2"].value $==$ "CELL\_VAL2").
+\end{itemize}
 \end{itemize}
 \end{frame}
 
  \begin{frame}[c]
  \frametitle{Deliverables}
  \begin{enumerate}
- \item \textbf{unique values}: 
-\begin{itemize}
-\item report whether every ID in the column \say{survey\_id} is unique.
-\end{itemize}
+% \item \textbf{unique values}: 
+%\begin{itemize}
+%\item report whether every ID in the column \say{survey\_id} is unique.
+%\end{itemize}
  \item \textbf{inconsistencies}: 
  \begin{itemize}
-\item find the rows with values 4, 31, 2000 in mo, dy, yr columns respectively.
-\item remove all the matching rows (hint: use the drop-down arrow in the column named \say{All}) and export the data to a csv file. 
+\item report the number of rows that match 4, 31, 2000 in mo, dy, yr columns respectively.
 \end{itemize}
 \item \textbf{format variabilities}:
 \begin{itemize}
@@ -290,7 +305,7 @@
 \item check whether they are actually missing (hint: you may want to check meta-data!).
 \item hint: commonly used encodings: \say{NA}, \say{N/A}, \say{Null}, \say{-1}, \say{-99}, etc. 
 \end{itemize}
-\item explain also if empty cells in reproductive variables (reprod, testes, vagina, pregnant, nipples, lactation) and notes (note1, note2, note3, note4, note5) denote missing data.
+%\item explain also if empty cells in notes (note1, note2, note3, note4, note5) denote missing data.
 \end{itemize}
  \end{enumerate}
 \end{frame}
@@ -300,6 +315,7 @@
  \begin{itemize}
  \item Traffic Violations dataset at \footnotesize{\url{https://catalog.data.gov/dataset/traffic-violations-56dda}}.
  \item import the subset of the original data given in datasets/traffic\_violations\_subset.csv.
+ \item meta-data at meta-data/traffic\_violations.json.
  \item look at the columns named \say{Make} and \say{Driver City}.
  \item report the data quality issues.
  \item use OpenRefine to clean the data and explain which feature you used.
