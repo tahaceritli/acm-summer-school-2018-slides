@@ -11,7 +11,7 @@
 
 \bibliographystyle{ieeetr}
 \usetikzlibrary{arrows,automata}
-\usetikzlibrary{bayesnet}
+%\usetikzlibrary{bayesnet}
 
 \mode<presentation>						% Set options
 {
@@ -29,10 +29,11 @@
 \usepackage{hyperref}					% For cross-referencing
 
 \title{Hands on Data Cleaning of Messy Data}	% Presentation title
-% \author{Author One}								% Presentation author
-%\institute{Name of institution}					% Author affiliation
+\author{Taha Ceritli and Chris Williams}
+\institute{School of Informatics, University of Edinburgh}
 \date{\today}									% Today's date	
 
+\newcommand{\cut}[1]{}
 \begin{document}
 
 \begin{frame}
@@ -63,6 +64,9 @@
  \item the original data is provided by Ernest et.\ al.\ \cite{Ernest2018}. 
  \item meta-data is also available at \footnotesize{\url{http://esapubs.org/archive/ecol/E090/118/Portal\_rodent\_metadata.htm}}.
   \end{itemize}
+ \item Acknowledgement: this exercise is based on the Data Carpentry 
+tutorial at
+\footnotesize{\url{http://www.datacarpentry.org/OpenRefine-ecology-lesson/}}.
  \end{itemize}
  \end{frame}
  
@@ -285,7 +289,7 @@
 \item \textbf{format variabilities}:
 \begin{itemize}
 \item report how many unique values exist in the \say{country} column of the original dataset.
-\item is there any problems with the data? if so, explain how did you solve them? 
+\item are there any problems with the data? if so, explain how did you solve them? 
 \item report how many unique values you have after fixing the potential inconsistencies.
 \item hint: \say{clustering} or \say{reconciliation} feature of OpenRefine could be useful for this task.
  \end{itemize}
@@ -311,6 +315,7 @@
  \end{enumerate}
 \end{frame}
 
+\cut{
  \begin{frame}[c]
  \frametitle{Deliverables - Bonus}
  \begin{itemize}
@@ -322,7 +327,7 @@
  \item use OpenRefine to clean the data and explain which feature you used.
  \end{itemize}
 \end{frame}
-
+}
 
 \begin{frame}[c]
  \frametitle{Submissions}
